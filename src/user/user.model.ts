@@ -1,14 +1,16 @@
 import * as mongoose from 'mongoose';
 
-export class User {
+export class LocalUser {
   constructor(public idNumber: number) {}
 }
 
-// export const UserSchema = new mongoose.Schema({
-//   idNumber: { type: Number, required: false },
-// });
+export const UserSchema = new mongoose.Schema({
+  email: { type: String, required: false },
+  password: { type: String, required: false },
+});
 
-// //use mongodb atlas to store
-// export interface User extends mongoose.Document {
-//   idNumber: Number;
-// }
+//use mongodb atlas to store
+export interface User extends mongoose.Document {
+  email: Number;
+  password: String;
+}

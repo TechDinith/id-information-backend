@@ -1,14 +1,12 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { User } from './user.model';
+import { LocalUser, User } from './user.model';
 
 @Injectable()
 export class UserService {
-  user: User[] = [];
-
-  //mongodb atlas
-  //   constructor(@InjectModel('User') private readonly userModel: Model<User>) {}
+  //   mongodb atlas
+  constructor(@InjectModel('User') private readonly userModel: Model<User>) {}
 
   //using to get gender and dob
   async userDobAndGender(idNumber: number) {
@@ -39,5 +37,26 @@ export class UserService {
       gender,
       dob: formatedDob,
     };
+  }
+
+  //using to store data in mongodb atlas
+  async insertUser(email: String, password: String) {
+    const newUser = new this.userModel({
+      email,
+      password,
+    });
+    const result = await newUser.save();
+
+    return result.id as string;
+  }
+
+  //find user in mongodb atlas
+  async validateUser(email: string, pass: string): Promise<any> {
+    const user = await this.userModel.findOne({ email });
+    if (user && user.password === pass) {
+      const { password, ...result } = user;
+      return true;
+    }
+    return null;
   }
 }
