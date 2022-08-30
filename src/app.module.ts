@@ -8,7 +8,7 @@ import { UserModule } from './user/user.module';
   imports: [
     UserModule,
     MongooseModule.forRoot(
-      'mongodb+srv://mernApp:cq0QKbZKVLhWWOD7@cluster0.joocg.mongodb.net/jware?retryWrites=true&w=majority ',
+     //mongo url
     ),
   ],
   controllers: [AppController],
